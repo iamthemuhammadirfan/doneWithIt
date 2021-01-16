@@ -7,12 +7,29 @@
  */
 
 import React, {useState} from "react";
-import {StyleSheet, Switch} from "react-native";
+import {StyleSheet} from "react-native";
 import AppScreen from "./app/components/AppScreen";
 import AppTextInput from "./app/components/AppTextInput";
+import AppPicker from "./app/components/AppPicker";
+const categories = [
+  {label: "Furniture", value: 1},
+  {label: "Clothing", value: 2},
+  {label: "Cameras", value: 3},
+];
 const App = () => {
-  const [isNew, setIsNew] = useState(false);
-  return <AppScreen></AppScreen>;
+  const [category, setCategory] = useState(categories[2]);
+  return (
+    <AppScreen>
+      <AppPicker
+        selectedItem={category}
+        onSelectItem={(item) => setCategory(item)}
+        icon="apps"
+        items={categories}
+        placeholder="Category"
+      />
+      <AppTextInput icon="email" placeholder="Email" />
+    </AppScreen>
+  );
 };
 
 const styles = StyleSheet.create({
