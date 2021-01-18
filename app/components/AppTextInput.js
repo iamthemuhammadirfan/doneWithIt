@@ -2,9 +2,9 @@ import React from "react";
 import {StyleSheet, TextInput, View} from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import defaultStyles from "../config/styles";
-export default function AppTextInput({icon, ...otherProps}) {
+export default function AppTextInput({icon, width = "100%", ...otherProps}) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {width}]}>
       {icon && (
         <Icon
           name={icon}
@@ -13,7 +13,11 @@ export default function AppTextInput({icon, ...otherProps}) {
           style={styles.icon}
         />
       )}
-      <TextInput style={defaultStyles.text} {...otherProps} />
+      <TextInput
+        style={defaultStyles.text}
+        placeholderTextColor={defaultStyles.colors.medium}
+        {...otherProps}
+      />
     </View>
   );
 }
@@ -24,8 +28,8 @@ const styles = StyleSheet.create({
     backgroundColor: defaultStyles.colors.light,
     borderRadius: 25,
     flexDirection: "row",
-    width: "100%",
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     marginVertical: 10,
   },
   icon: {marginRight: 10},

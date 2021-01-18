@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {StyleSheet, FlatList, View} from "react-native";
+import {StyleSheet, FlatList} from "react-native";
 import AppListItem from "../components/AppListItem";
 import AppListItemDeleteAction from "../components/AppListItemDeleteAction";
 import AppListItemSeparator from "../components/AppListItemSeparator";
@@ -8,8 +8,9 @@ import AppScreen from "../components/AppScreen";
 const initialMessages = [
   {
     id: 1,
-    title: "t1",
-    description: "d1",
+    title: "Mosh Hamedani",
+    description:
+      "Hello mister give my money back, otherwise I'll see in the court",
     image: require("../assets/mosh.jpg"),
   },
   {

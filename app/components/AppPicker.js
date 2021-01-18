@@ -8,6 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import colors from "../config/colors";
 import defaultStyles from "../config/styles";
 import AppPickerItem from "./AppPickerItem";
 import AppScreen from "./AppScreen";
@@ -15,15 +16,18 @@ import AppText from "./AppText";
 export default function AppPicker({
   icon,
   items,
+  numberOfColumns = 1,
   selectedItem,
   onSelectItem,
   placeholder,
+  PickerItemComponent = AppPickerItem,
+  width = "100%",
 }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setModalVisible(true)}>
-        <View style={styles.container}>
+        <View style={[styles.container, {width}]}>
           {icon && (
             <Icon
               name={icon}
@@ -32,9 +36,12 @@ export default function AppPicker({
               style={styles.icon}
             />
           )}
-          <AppText style={styles.text}>
-            {selectedItem ? selectedItem.label : placeholder}
-          </AppText>
+          {selectedItem ? (
+            <AppText style={styles.text}>{selectedItem.label}</AppText>
+          ) : (
+            <AppText style={styles.placeholder}>{placeholder}</AppText>
+          )}
+
           <Icon
             name="chevron-down"
             size={25}
@@ -47,10 +54,11 @@ export default function AppPicker({
           <Button title="Close" onPress={() => setModalVisible(false)} />
           <FlatList
             data={items}
+            numColumns={numberOfColumns}
             keyExtractor={(key) => key.value.toString()}
             renderItem={({item}) => (
-              <AppPickerItem
-                label={item.label}
+              <PickerItemComponent
+                item={item}
                 onPress={() => {
                   setModalVisible(false);
                   onSelectItem(item);
@@ -70,12 +78,15 @@ const styles = StyleSheet.create({
     backgroundColor: defaultStyles.colors.light,
     borderRadius: 25,
     flexDirection: "row",
-    width: "100%",
     padding: 15,
     marginVertical: 10,
   },
   icon: {marginRight: 10},
   text: {
     flex: 1,
+  },
+  placeholder: {
+    flex: 1,
+    color: colors.medium,
   },
 });
